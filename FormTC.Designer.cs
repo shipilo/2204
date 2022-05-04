@@ -57,13 +57,6 @@ namespace _2204
             this.fileExplorer2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelContainer = new System.Windows.Forms.TableLayoutPanel();
             this.panelFunctional = new System.Windows.Forms.FlowLayoutPanel();
-            this.buttonBack = new System.Windows.Forms.Button();
-            this.buttonNext = new System.Windows.Forms.Button();
-            this.buttonCreateFile = new System.Windows.Forms.Button();
-            this.buttonCreateFolder = new System.Windows.Forms.Button();
-            this.buttonCopy = new System.Windows.Forms.Button();
-            this.buttonRename = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.создатьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.файлToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +68,14 @@ namespace _2204
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.вАрхивToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.свойстваToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonBack = new System.Windows.Forms.Button();
+            this.buttonNext = new System.Windows.Forms.Button();
+            this.buttonReload = new System.Windows.Forms.Button();
+            this.buttonCreateFile = new System.Windows.Forms.Button();
+            this.buttonCreateFolder = new System.Windows.Forms.Button();
+            this.buttonCopy = new System.Windows.Forms.Button();
+            this.buttonRename = new System.Windows.Forms.Button();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -97,14 +98,14 @@ namespace _2204
             this.настройкиToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(982, 29);
+            this.menuStrip.Size = new System.Drawing.Size(982, 32);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip1";
             // 
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(61, 25);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(61, 26);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // действияToolStripMenuItem
@@ -119,7 +120,7 @@ namespace _2204
             this.вАрхивToolStripMenuItem,
             this.свойстваToolStripMenuItem});
             this.действияToolStripMenuItem.Name = "действияToolStripMenuItem";
-            this.действияToolStripMenuItem.Size = new System.Drawing.Size(91, 25);
+            this.действияToolStripMenuItem.Size = new System.Drawing.Size(91, 26);
             this.действияToolStripMenuItem.Text = "Действия";
             // 
             // создатьToolStripMenuItem
@@ -197,7 +198,7 @@ namespace _2204
             this.шрифтToolStripMenuItem,
             this.директорияПоУмолчаниюToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(101, 25);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(101, 26);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // цаетоваяСхемаToolStripMenuItem
@@ -205,18 +206,21 @@ namespace _2204
             this.цаетоваяСхемаToolStripMenuItem.Name = "цаетоваяСхемаToolStripMenuItem";
             this.цаетоваяСхемаToolStripMenuItem.Size = new System.Drawing.Size(298, 30);
             this.цаетоваяСхемаToolStripMenuItem.Text = "Цаетовая схема";
+            this.цаетоваяСхемаToolStripMenuItem.Click += new System.EventHandler(this.цаетоваяСхемаToolStripMenuItem_Click);
             // 
             // шрифтToolStripMenuItem
             // 
             this.шрифтToolStripMenuItem.Name = "шрифтToolStripMenuItem";
             this.шрифтToolStripMenuItem.Size = new System.Drawing.Size(298, 30);
             this.шрифтToolStripMenuItem.Text = "Шрифт";
+            this.шрифтToolStripMenuItem.Click += new System.EventHandler(this.шрифтToolStripMenuItem_Click);
             // 
             // директорияПоУмолчаниюToolStripMenuItem
             // 
             this.директорияПоУмолчаниюToolStripMenuItem.Name = "директорияПоУмолчаниюToolStripMenuItem";
             this.директорияПоУмолчаниюToolStripMenuItem.Size = new System.Drawing.Size(298, 30);
             this.директорияПоУмолчаниюToolStripMenuItem.Text = "Директория по умолчанию";
+            this.директорияПоУмолчаниюToolStripMenuItem.Click += new System.EventHandler(this.директорияПоУмолчаниюToolStripMenuItem_Click);
             // 
             // splitContainer
             // 
@@ -328,19 +332,20 @@ namespace _2204
             this.panelContainer.Controls.Add(this.panelFunctional, 0, 0);
             this.panelContainer.Controls.Add(this.splitContainer, 0, 1);
             this.panelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContainer.Location = new System.Drawing.Point(0, 29);
+            this.panelContainer.Location = new System.Drawing.Point(0, 32);
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.RowCount = 2;
             this.panelContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.panelContainer.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.panelContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.panelContainer.Size = new System.Drawing.Size(982, 622);
+            this.panelContainer.Size = new System.Drawing.Size(982, 619);
             this.panelContainer.TabIndex = 2;
             // 
             // panelFunctional
             // 
             this.panelFunctional.Controls.Add(this.buttonBack);
             this.panelFunctional.Controls.Add(this.buttonNext);
+            this.panelFunctional.Controls.Add(this.buttonReload);
             this.panelFunctional.Controls.Add(this.buttonCreateFile);
             this.panelFunctional.Controls.Add(this.buttonCreateFolder);
             this.panelFunctional.Controls.Add(this.buttonCopy);
@@ -351,111 +356,6 @@ namespace _2204
             this.panelFunctional.Name = "panelFunctional";
             this.panelFunctional.Size = new System.Drawing.Size(976, 34);
             this.panelFunctional.TabIndex = 0;
-            // 
-            // buttonBack
-            // 
-            this.buttonBack.BackColor = System.Drawing.Color.Transparent;
-            this.buttonBack.BackgroundImage = global::_2204.Properties.Resources.left;
-            this.buttonBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonBack.FlatAppearance.BorderSize = 0;
-            this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonBack.Location = new System.Drawing.Point(3, 3);
-            this.buttonBack.Name = "buttonBack";
-            this.buttonBack.Size = new System.Drawing.Size(30, 30);
-            this.buttonBack.TabIndex = 0;
-            this.buttonBack.UseVisualStyleBackColor = false;
-            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
-            // 
-            // buttonNext
-            // 
-            this.buttonNext.BackColor = System.Drawing.Color.Transparent;
-            this.buttonNext.BackgroundImage = global::_2204.Properties.Resources.right;
-            this.buttonNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonNext.FlatAppearance.BorderSize = 0;
-            this.buttonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonNext.Location = new System.Drawing.Point(39, 3);
-            this.buttonNext.Name = "buttonNext";
-            this.buttonNext.Size = new System.Drawing.Size(30, 30);
-            this.buttonNext.TabIndex = 1;
-            this.buttonNext.UseVisualStyleBackColor = false;
-            this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
-            // 
-            // buttonCreateFile
-            // 
-            this.buttonCreateFile.BackColor = System.Drawing.Color.Transparent;
-            this.buttonCreateFile.BackgroundImage = global::_2204.Properties.Resources.file;
-            this.buttonCreateFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonCreateFile.FlatAppearance.BorderSize = 0;
-            this.buttonCreateFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCreateFile.Location = new System.Drawing.Point(75, 3);
-            this.buttonCreateFile.Name = "buttonCreateFile";
-            this.buttonCreateFile.Size = new System.Drawing.Size(30, 30);
-            this.buttonCreateFile.TabIndex = 1;
-            this.buttonCreateFile.UseVisualStyleBackColor = false;
-            this.buttonCreateFile.Click += new System.EventHandler(this.buttonCreateFile_Click);
-            // 
-            // buttonCreateFolder
-            // 
-            this.buttonCreateFolder.BackColor = System.Drawing.Color.Transparent;
-            this.buttonCreateFolder.BackgroundImage = global::_2204.Properties.Resources.folder;
-            this.buttonCreateFolder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonCreateFolder.FlatAppearance.BorderSize = 0;
-            this.buttonCreateFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCreateFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCreateFolder.Location = new System.Drawing.Point(111, 3);
-            this.buttonCreateFolder.Name = "buttonCreateFolder";
-            this.buttonCreateFolder.Size = new System.Drawing.Size(30, 30);
-            this.buttonCreateFolder.TabIndex = 1;
-            this.buttonCreateFolder.UseVisualStyleBackColor = false;
-            this.buttonCreateFolder.Click += new System.EventHandler(this.buttonCreateFolder_Click);
-            // 
-            // buttonCopy
-            // 
-            this.buttonCopy.BackColor = System.Drawing.Color.Transparent;
-            this.buttonCopy.BackgroundImage = global::_2204.Properties.Resources.copy;
-            this.buttonCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonCopy.FlatAppearance.BorderSize = 0;
-            this.buttonCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCopy.Location = new System.Drawing.Point(147, 3);
-            this.buttonCopy.Name = "buttonCopy";
-            this.buttonCopy.Size = new System.Drawing.Size(30, 30);
-            this.buttonCopy.TabIndex = 1;
-            this.buttonCopy.UseVisualStyleBackColor = false;
-            this.buttonCopy.Click += new System.EventHandler(this.buttonCopy_Click);
-            // 
-            // buttonRename
-            // 
-            this.buttonRename.BackColor = System.Drawing.Color.Transparent;
-            this.buttonRename.BackgroundImage = global::_2204.Properties.Resources.rename;
-            this.buttonRename.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRename.FlatAppearance.BorderSize = 0;
-            this.buttonRename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRename.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRename.Location = new System.Drawing.Point(183, 3);
-            this.buttonRename.Name = "buttonRename";
-            this.buttonRename.Size = new System.Drawing.Size(30, 30);
-            this.buttonRename.TabIndex = 1;
-            this.buttonRename.UseVisualStyleBackColor = false;
-            this.buttonRename.Click += new System.EventHandler(this.buttonRename_Click);
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.BackColor = System.Drawing.Color.Transparent;
-            this.buttonDelete.BackgroundImage = global::_2204.Properties.Resources.backet;
-            this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDelete.FlatAppearance.BorderSize = 0;
-            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonDelete.Location = new System.Drawing.Point(219, 3);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(30, 30);
-            this.buttonDelete.TabIndex = 1;
-            this.buttonDelete.UseVisualStyleBackColor = false;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // contextMenuStrip
             // 
@@ -540,6 +440,126 @@ namespace _2204
             this.свойстваToolStripMenuItem1.Text = "Свойства";
             this.свойстваToolStripMenuItem1.Click += new System.EventHandler(this.свойстваToolStripMenuItem_Click);
             // 
+            // buttonBack
+            // 
+            this.buttonBack.BackColor = System.Drawing.Color.Transparent;
+            this.buttonBack.BackgroundImage = global::_2204.Properties.Resources.left;
+            this.buttonBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonBack.FlatAppearance.BorderSize = 0;
+            this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonBack.Location = new System.Drawing.Point(3, 3);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(30, 30);
+            this.buttonBack.TabIndex = 0;
+            this.buttonBack.UseVisualStyleBackColor = false;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            // 
+            // buttonNext
+            // 
+            this.buttonNext.BackColor = System.Drawing.Color.Transparent;
+            this.buttonNext.BackgroundImage = global::_2204.Properties.Resources.right;
+            this.buttonNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonNext.FlatAppearance.BorderSize = 0;
+            this.buttonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonNext.Location = new System.Drawing.Point(39, 3);
+            this.buttonNext.Name = "buttonNext";
+            this.buttonNext.Size = new System.Drawing.Size(30, 30);
+            this.buttonNext.TabIndex = 1;
+            this.buttonNext.UseVisualStyleBackColor = false;
+            this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
+            // 
+            // buttonReload
+            // 
+            this.buttonReload.BackColor = System.Drawing.Color.Transparent;
+            this.buttonReload.BackgroundImage = global::_2204.Properties.Resources.reload;
+            this.buttonReload.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonReload.FlatAppearance.BorderSize = 0;
+            this.buttonReload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonReload.Location = new System.Drawing.Point(75, 3);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(30, 30);
+            this.buttonReload.TabIndex = 1;
+            this.buttonReload.UseVisualStyleBackColor = false;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
+            // buttonCreateFile
+            // 
+            this.buttonCreateFile.BackColor = System.Drawing.Color.Transparent;
+            this.buttonCreateFile.BackgroundImage = global::_2204.Properties.Resources.file;
+            this.buttonCreateFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonCreateFile.FlatAppearance.BorderSize = 0;
+            this.buttonCreateFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCreateFile.Location = new System.Drawing.Point(111, 3);
+            this.buttonCreateFile.Name = "buttonCreateFile";
+            this.buttonCreateFile.Size = new System.Drawing.Size(30, 30);
+            this.buttonCreateFile.TabIndex = 1;
+            this.buttonCreateFile.UseVisualStyleBackColor = false;
+            this.buttonCreateFile.Click += new System.EventHandler(this.buttonCreateFile_Click);
+            // 
+            // buttonCreateFolder
+            // 
+            this.buttonCreateFolder.BackColor = System.Drawing.Color.Transparent;
+            this.buttonCreateFolder.BackgroundImage = global::_2204.Properties.Resources.folder;
+            this.buttonCreateFolder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonCreateFolder.FlatAppearance.BorderSize = 0;
+            this.buttonCreateFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCreateFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCreateFolder.Location = new System.Drawing.Point(147, 3);
+            this.buttonCreateFolder.Name = "buttonCreateFolder";
+            this.buttonCreateFolder.Size = new System.Drawing.Size(30, 30);
+            this.buttonCreateFolder.TabIndex = 1;
+            this.buttonCreateFolder.UseVisualStyleBackColor = false;
+            this.buttonCreateFolder.Click += new System.EventHandler(this.buttonCreateFolder_Click);
+            // 
+            // buttonCopy
+            // 
+            this.buttonCopy.BackColor = System.Drawing.Color.Transparent;
+            this.buttonCopy.BackgroundImage = global::_2204.Properties.Resources.copy;
+            this.buttonCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonCopy.FlatAppearance.BorderSize = 0;
+            this.buttonCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCopy.Location = new System.Drawing.Point(183, 3);
+            this.buttonCopy.Name = "buttonCopy";
+            this.buttonCopy.Size = new System.Drawing.Size(30, 30);
+            this.buttonCopy.TabIndex = 1;
+            this.buttonCopy.UseVisualStyleBackColor = false;
+            this.buttonCopy.Click += new System.EventHandler(this.buttonCopy_Click);
+            // 
+            // buttonRename
+            // 
+            this.buttonRename.BackColor = System.Drawing.Color.Transparent;
+            this.buttonRename.BackgroundImage = global::_2204.Properties.Resources.rename;
+            this.buttonRename.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonRename.FlatAppearance.BorderSize = 0;
+            this.buttonRename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRename.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonRename.Location = new System.Drawing.Point(219, 3);
+            this.buttonRename.Name = "buttonRename";
+            this.buttonRename.Size = new System.Drawing.Size(30, 30);
+            this.buttonRename.TabIndex = 1;
+            this.buttonRename.UseVisualStyleBackColor = false;
+            this.buttonRename.Click += new System.EventHandler(this.buttonRename_Click);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.BackColor = System.Drawing.Color.Transparent;
+            this.buttonDelete.BackgroundImage = global::_2204.Properties.Resources.backet;
+            this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonDelete.FlatAppearance.BorderSize = 0;
+            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.969231F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonDelete.Location = new System.Drawing.Point(255, 3);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(30, 30);
+            this.buttonDelete.TabIndex = 1;
+            this.buttonDelete.UseVisualStyleBackColor = false;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
             // FormTC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -553,6 +573,7 @@ namespace _2204
             this.Name = "FormTC";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MyTotalCommander";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormTC_FormClosing);
             this.Load += new System.EventHandler(this.FormTC_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -618,6 +639,7 @@ namespace _2204
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem вАрхивToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem свойстваToolStripMenuItem1;
+        private System.Windows.Forms.Button buttonReload;
     }
 }
 

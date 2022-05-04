@@ -5,7 +5,8 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
+//using System.IO.Compression;
+using Ionic.Zip;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,6 +35,13 @@ namespace _2204
         private List<string> pathsSelected1;
         private List<string> pathsSelected2;
 
+        private string pathStarting1;
+        private string pathStarting2;
+        private bool pathSaving1;
+        private bool pathSaving2;
+
+        private bool loaded;
+
         public FormTC()
         {
             InitializeComponent();
@@ -46,10 +54,36 @@ namespace _2204
 
         private void FormTC_Load(object sender, EventArgs e)
         {
-            //(DriveInfo.GetDrives()[0].Name);
-            //(DriveInfo.GetDrives()[DriveInfo.GetDrives().Length - 1].Name);
-            string pathStarting1 = @"C:\Users\user\Desktop";
-            string pathStarting2 = @"C:\Users\user\Desktop\АиГ";
+            loaded = false;
+
+            pathStarting1 = DriveInfo.GetDrives()[0].Name;
+            pathSaving1 = true;
+            pathStarting2 = DriveInfo.GetDrives()[DriveInfo.GetDrives().Length - 1].Name;
+            pathSaving2 = true;
+            if (File.Exists("1.txt"))
+            {
+                try
+                {
+                    StreamReader sr = new StreamReader("1.txt");
+                    string[] str = sr.ReadToEnd().Trim().Split('*');
+                    pathStarting1 = str[0];
+                    pathSaving1 = Convert.ToBoolean(str[1]);
+                    sr.Close();
+                }
+                catch { }
+            }
+            if (File.Exists("2.txt"))
+            {
+                try
+                {
+                    StreamReader sr = new StreamReader("2.txt");
+                    string[] str = sr.ReadToEnd().Trim().Split('*');
+                    pathStarting2 = str[0];
+                    pathSaving2 = Convert.ToBoolean(str[1]);
+                    sr.Close();
+                }
+                catch { }
+            }
 
             fileExplorer = fileExplorer2;
             textBoxPath = textBoxPath2;
@@ -66,20 +100,26 @@ namespace _2204
             pathsSelected = pathsSelected1;
             pathHistory1.Add(pathStarting1);
             LoadElements(pathStarting1);
+
+            loaded = true;
         }
 
         public void CreatePathHistoryBrunch(string path)
         {
-            pathHistory.RemoveRange(pathIndex + 1, pathHistory.Count - pathIndex - 1);
-            pathHistory.Add(path);
-            pathIndex++;
+            if (!File.Exists(path))
+            {
+                if (pathsSelected != null) pathsSelected.Clear();
+
+                pathHistory.RemoveRange(pathIndex + 1, pathHistory.Count - pathIndex - 1);
+                pathHistory.Add(path);
+                pathIndex++;
+            }
         }
 
         public void LoadElements(string path)
         {
             if (Directory.Exists(path))
             {
-                if(pathsSelected != null) pathsSelected.Clear();
                 fileExplorer.Controls.Clear();
                 textBoxPath.Text = path;
 
@@ -88,7 +128,11 @@ namespace _2204
                 {
                     foreach (DirectoryInfo folder in directory.GetDirectories())
                     {
-                        fileExplorer.Controls.Add(new Element(null, folder.Name, folder.FullName, fileExplorer.Width, this));
+                        try
+                        {
+                            fileExplorer.Controls.Add(new Element(null, folder.Name, folder.FullName, fileExplorer.Width, this));
+                        }
+                        catch { }
                     }
                 }
                 catch { }
@@ -96,7 +140,11 @@ namespace _2204
                 {
                     foreach (FileInfo file in directory.GetFiles())
                     {
-                        fileExplorer.Controls.Add(new Element(Icon.ExtractAssociatedIcon(file.FullName).ToBitmap(), file.Name, file.FullName, fileExplorer.Width, this));
+                        try
+                        {
+                            fileExplorer.Controls.Add(new Element(Icon.ExtractAssociatedIcon(file.FullName).ToBitmap(), file.Name, file.FullName, fileExplorer.Width, this));
+                        }
+                        catch { }
                     }
                 }
                 catch { }
@@ -104,6 +152,13 @@ namespace _2204
             else if (File.Exists(path))
             {
                 Process.Start(path);
+            }
+            if (textBoxPath1.Text.Equals(textBoxPath2.Text) && loaded)
+            {
+                FlowLayoutPanel flowLayoutPanel = fileExplorer;
+                fileExplorer = fileExplorerOpposite;
+                LoadElements(textBoxPathOpposite.Text);
+                fileExplorer = flowLayoutPanel;
             }
         }
 
@@ -170,8 +225,7 @@ namespace _2204
             FormDialog formDialog = new FormDialog();
             if (formDialog.ShowDialog() == DialogResult.OK)
             {
-                FileStream fileStream = File.Create(textBoxPath.Text + "\\" + formDialog.textBoxFileName.Text);
-                fileStream.Close();
+                File.Create(textBoxPath.Text + "\\" + formDialog.textBoxFileName.Text);
                 LoadElements(textBoxPath.Text);
             }
         }
@@ -210,18 +264,28 @@ namespace _2204
             {
                 if (Directory.Exists(path))
                 {
-                    Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(path, textBoxPathOpposite.Text);
+                    string pathNew = textBoxPathOpposite.Text + "\\" + Path.GetFileName(path);
+                    while (Directory.Exists(pathNew)) pathNew += " (копия)";
+                    Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(path, pathNew);
+
+                    FlowLayoutPanel flowLayoutPanel = fileExplorer;
+                    fileExplorer = fileExplorerOpposite;
+                    LoadElements(textBoxPathOpposite.Text);
+                    fileExplorer = flowLayoutPanel;
                 }
                 else if (File.Exists(path))
                 {
-                    FileInfo fileInfo = new FileInfo(path);
-                    Microsoft.VisualBasic.FileIO.FileSystem.CopyFile(path, textBoxPathOpposite.Text + "\\" + fileInfo.Name);
+                    string ext = Path.GetExtension(path);
+                    string pathWithoutExt = textBoxPathOpposite.Text + "\\" + Path.GetFileNameWithoutExtension(path);
+                    while (File.Exists(pathWithoutExt + ext)) pathWithoutExt += " (копия)";
+                    Microsoft.VisualBasic.FileIO.FileSystem.CopyFile(path, pathWithoutExt + ext);
+
+                    FlowLayoutPanel flowLayoutPanel = fileExplorer;
+                    fileExplorer = fileExplorerOpposite;
+                    LoadElements(textBoxPathOpposite.Text);
+                    fileExplorer = flowLayoutPanel;
                 }
             }
-            FlowLayoutPanel flowLayoutPanel = fileExplorer;
-            fileExplorer = fileExplorerOpposite;
-            LoadElements(textBoxPathOpposite.Text);
-            fileExplorer = flowLayoutPanel;
         }
 
         private void buttonRename_Click(object sender, EventArgs e)
@@ -279,14 +343,34 @@ namespace _2204
 
                     string propertiesString = "";
                     foreach (var kvp in properties) propertiesString += $"{kvp.name}: {kvp.value}\n";
-                    MessageBox.Show(propertiesString, "Свойства:" + path, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(propertiesString, "Свойства: " + path, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
         private void вАрхивToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //ZipFile.CreateFromDirectory()
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ZipFile zip = new ZipFile(saveFileDialog.FileName);
+                foreach (string path in pathsSelected)
+                {
+                    /*if (File.Exists(path)) */
+                    zip.AddItem(path, "");
+                    //else if (Directory.Exists(path)) zip.AddItem(path, Path.GetDirectoryName(path));
+                }
+                try
+                {
+                    zip.Save(saveFileDialog.FileName);
+                    MessageBox.Show("Архивация прошла успешно.", "В архив", MessageBoxButtons.OK);
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось архивироать файлы.", "В архив", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void fileExplorer_SizeChanged(object sender, EventArgs e)
@@ -312,6 +396,68 @@ namespace _2204
                 (sender as TextBox).Text = pathHistory[pathHistory.Count - 1];
                 (sender as TextBox).Text += " ";
             }
+        }
+
+        private void цаетоваяСхемаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.AllowFullOpen = true;
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.BackColor = colorDialog.Color;
+            }
+        }
+
+        private void шрифтToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontDialog fontDialog = new FontDialog();
+            if (fontDialog.ShowDialog() == DialogResult.OK)
+            {
+                ChangeFont(panelContainer, fontDialog.Font);
+            }
+        }
+
+        private void ChangeFont(Control control, Font font)
+        {
+            if (control.Controls.Count == 0) control.Font = font;
+            else
+            {
+                foreach (Control control1 in control.Controls)
+                {
+                    ChangeFont(control1, font);
+                }
+            }
+        }
+
+        private void директорияПоУмолчаниюToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormDirectoryDialog formDirectoryDialog = new FormDirectoryDialog(pathStarting1, pathStarting2, pathSaving1, pathSaving2);
+            if (formDirectoryDialog.ShowDialog() == DialogResult.OK)
+            {
+                pathSaving1 = formDirectoryDialog.radioButtonLeft1.Checked;
+                pathStarting1 = formDirectoryDialog.textBoxLeft.Text;
+
+                pathSaving2 = formDirectoryDialog.radioButtonRight1.Checked;
+                pathStarting2 = formDirectoryDialog.textBoxRight.Text;
+            }
+        }
+
+        private void FormTC_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (pathSaving1) pathStarting1 = textBoxPath1.Text;
+            StreamWriter sw1 = new StreamWriter("1.txt");
+            sw1.Write(pathStarting1 + "*" + pathSaving1.ToString());
+            sw1.Close();
+
+            if (pathSaving2) pathStarting2 = textBoxPath2.Text;
+            StreamWriter sw2 = new StreamWriter("2.txt");
+            sw2.Write(pathStarting2 + "*" + pathSaving2.ToString());
+            sw2.Close();
+        }
+
+        private void buttonReload_Click(object sender, EventArgs e)
+        {
+            LoadElements(textBoxPath.Text);
         }
     }
 }
