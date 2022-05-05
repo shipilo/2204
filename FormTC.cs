@@ -10,6 +10,7 @@ using Ionic.Zip;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace _2204
 {
@@ -54,7 +55,23 @@ namespace _2204
 
         private void FormTC_Load(object sender, EventArgs e)
         {
-            loaded = false;
+            Assembly execAssembly = Assembly.GetExecutingAssembly();
+            string resourceName = "_2204.Ionic.Zip.dll";
+
+            using (var stream = execAssembly.GetManifestResourceStream(resourceName))
+            {
+                int read = 0, toRead = (int)stream.Length;
+                byte[] data = new byte[toRead];
+
+                do
+                {
+                    int n = stream.Read(data, read, data.Length - read);
+                    toRead -= n;
+                    read += n;
+                } while (toRead > 0);
+
+                Assembly.Load(data);
+            }
 
             pathStarting1 = DriveInfo.GetDrives()[0].Name;
             pathSaving1 = true;
@@ -349,6 +366,11 @@ namespace _2204
         }
 
         private void вАрхивToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Compress();
+        }
+
+        private async Task Compress()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
