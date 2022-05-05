@@ -149,13 +149,6 @@ namespace _2204
             {
                 Process.Start(path);
             }
-            if (textBoxPath1.Text.Equals(textBoxPath2.Text) && loaded)
-            {
-                FlowLayoutPanel flowLayoutPanel = fileExplorer;
-                fileExplorer = fileExplorerOpposite;
-                LoadElements(textBoxPathOpposite.Text);
-                fileExplorer = flowLayoutPanel;
-            }
         }
 
         public void fileExplorer_Validation(string tag)
