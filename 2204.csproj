@@ -137,11 +137,7 @@
     <None Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\Ionic.Zip.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="icon.ico" />
-    <EmbeddedResource Include="Ionic.Zip.dll" />
     <None Include="Resources\reload.png" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +150,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
