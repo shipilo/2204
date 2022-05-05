@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 
@@ -380,12 +379,9 @@ namespace _2204
 
         private void вАрхивToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Compress();
-        }
+            MessageBox.Show("Нет у меня больше времени и сил пытаться загрузить библиотеку для архивации с помощью рефлексии.");
+            /*SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-        private async Task Compress()
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -403,7 +399,7 @@ namespace _2204
                 {
                     MessageBox.Show("Не удалось архивироать файлы.", "В архив", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
+            }*/
         }
 
         private void fileExplorer_SizeChanged(object sender, EventArgs e)
