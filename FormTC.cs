@@ -42,45 +42,12 @@ namespace _2204
 
         public FormTC()
         {
-            RegisterDependencyResolver();
-
             InitializeComponent();
 
             pathHistory1 = new List<string>();
             pathHistory2 = new List<string>();
             pathsSelected1 = new List<string>();
             pathsSelected2 = new List<string>();
-        }
-
-        private static volatile bool _loaded;
-
-        public static void RegisterDependencyResolver()
-        {
-            if (!_loaded)
-            {
-                AppDomain.CurrentDomain.AssemblyResolve += OnResolve;
-                _loaded = true;
-            }
-        }
-
-        private static Assembly OnResolve(object sender, ResolveEventArgs args)
-        {
-            Assembly execAssembly = Assembly.GetExecutingAssembly();
-            string resourceName = "_2204.Ionic.Zip.dll";
-            using (var stream = execAssembly.GetManifestResourceStream(resourceName))
-            {
-                int read = 0, toRead = (int)stream.Length;
-                byte[] data = new byte[toRead];
-
-                do
-                {
-                    int n = stream.Read(data, read, data.Length - read);
-                    toRead -= n;
-                    read += n;
-                } while (toRead > 0);
-
-                return Assembly.Load(data);
-            }
         }
 
         private void FormTC_Load(object sender, EventArgs e)
