@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace _2204
@@ -14,6 +12,7 @@ namespace _2204
         [STAThread]
         static void Main()
         {
+            //Assembly.Load(_2204.Properties.Resources.);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormTC());

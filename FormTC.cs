@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+//using Ionic.Zip;
 
 namespace _2204
 {
@@ -44,7 +45,7 @@ namespace _2204
         public FormTC()
         {
             RegisterDependencyResolver();
-
+            
             InitializeComponent();
 
             pathHistory1 = new List<string>();
@@ -66,21 +67,27 @@ namespace _2204
 
         private static Assembly OnResolve(object sender, ResolveEventArgs args)
         {
-            Assembly execAssembly = Assembly.GetExecutingAssembly();
-            string resourceName = "_2204.Ionic.Zip.dll";
-            using (var stream = execAssembly.GetManifestResourceStream(resourceName))
+            DirectoryInfo directory = new DirectoryInfo(Environment.CurrentDirectory);
+            string resourceName = directory.Parent.Parent.FullName + "\\Resources\\Ionic.Zip.dll";
+            using (FileStream fsSource = new FileStream(resourceName, FileMode.Open, FileAccess.Read))
             {
-                int read = 0, toRead = (int)stream.Length;
-                byte[] data = new byte[toRead];
-
-                do
+                byte[] bytes = new byte[fsSource.Length];
+                int numBytesToRead = (int)fsSource.Length;
+                int numBytesRead = 0;
+                while (numBytesToRead > 0)
                 {
-                    int n = stream.Read(data, read, data.Length - read);
-                    toRead -= n;
-                    read += n;
-                } while (toRead > 0);
+                    // Read may return anything from 0 to numBytesToRead.
+                    int n = fsSource.Read(bytes, numBytesRead, numBytesToRead);
 
-                return Assembly.Load(data);
+                    // Break when the end of the file is reached.
+                    if (n == 0)
+                        break;
+
+                    numBytesRead += n;
+                    numBytesToRead -= n;
+                }
+                numBytesToRead = bytes.Length;
+                return Assembly.Load(bytes);
             }
         }
 
@@ -385,7 +392,8 @@ namespace _2204
 
         private async Task Compress()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            MessageBox.Show("У меня не хватило времени и сил на то, чтобы подгрузить библиотеку с помощью рефлексии.");
+            /*SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -403,7 +411,7 @@ namespace _2204
                 {
                     MessageBox.Show("Не удалось архивироать файлы.", "В архив", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
+            }*/
         }
 
         private void fileExplorer_SizeChanged(object sender, EventArgs e)
