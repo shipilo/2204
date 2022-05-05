@@ -5,10 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-//using System.IO.Compression;
-using Ionic.Zip;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _2204
@@ -350,15 +347,16 @@ namespace _2204
 
         private void вАрхивToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            MessageBox.Show("Нет у меня больше времени и сил пытаться загрузить библиотеку для архивации с помощью рефлексии.");
+            /*SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ZipFile zip = new ZipFile(saveFileDialog.FileName);
                 foreach (string path in pathsSelected)
                 {
-                    /*if (File.Exists(path)) */
-                    zip.AddItem(path, "");
+                    if (File.Exists(path))
+                        zip.AddItem(path, "");
                     //else if (Directory.Exists(path)) zip.AddItem(path, Path.GetDirectoryName(path));
                 }
                 try
@@ -370,7 +368,7 @@ namespace _2204
                 {
                     MessageBox.Show("Не удалось архивироать файлы.", "В архив", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
+            }*/
         }
 
         private void fileExplorer_SizeChanged(object sender, EventArgs e)
