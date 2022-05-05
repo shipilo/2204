@@ -140,7 +140,6 @@
     <None Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Ionic.Zip.dll" />
     <None Include="bin\Debug\Ionic.Zip.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
