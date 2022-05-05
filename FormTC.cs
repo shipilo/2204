@@ -5,8 +5,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-//using System.IO.Compression;
-using Ionic.Zip;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,6 +43,8 @@ namespace _2204
 
         public FormTC()
         {
+            RegisterDependencyResolver();
+
             InitializeComponent();
 
             pathHistory1 = new List<string>();
@@ -53,11 +53,21 @@ namespace _2204
             pathsSelected2 = new List<string>();
         }
 
-        private void FormTC_Load(object sender, EventArgs e)
+        private static volatile bool _loaded;
+
+        public static void RegisterDependencyResolver()
+        {
+            if (!_loaded)
+            {
+                AppDomain.CurrentDomain.AssemblyResolve += OnResolve;
+                _loaded = true;
+            }
+        }
+
+        private static Assembly OnResolve(object sender, ResolveEventArgs args)
         {
             Assembly execAssembly = Assembly.GetExecutingAssembly();
             string resourceName = "_2204.Ionic.Zip.dll";
-
             using (var stream = execAssembly.GetManifestResourceStream(resourceName))
             {
                 int read = 0, toRead = (int)stream.Length;
@@ -70,9 +80,12 @@ namespace _2204
                     read += n;
                 } while (toRead > 0);
 
-                Assembly.Load(data);
+                return Assembly.Load(data);
             }
+        }
 
+        private void FormTC_Load(object sender, EventArgs e)
+        {
             pathStarting1 = DriveInfo.GetDrives()[0].Name;
             pathSaving1 = true;
             pathStarting2 = DriveInfo.GetDrives()[DriveInfo.GetDrives().Length - 1].Name;
@@ -376,12 +389,10 @@ namespace _2204
             saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ZipFile zip = new ZipFile(saveFileDialog.FileName);
+                Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile(saveFileDialog.FileName);
                 foreach (string path in pathsSelected)
                 {
-                    /*if (File.Exists(path)) */
                     zip.AddItem(path, "");
-                    //else if (Directory.Exists(path)) zip.AddItem(path, Path.GetDirectoryName(path));
                 }
                 try
                 {
