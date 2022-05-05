@@ -36,6 +36,9 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -119,7 +122,6 @@
     <None Include="Resources\folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Ionic.Zip.dll" />
     <None Include="Resources\left.png" />
   </ItemGroup>
   <ItemGroup>
@@ -141,8 +143,8 @@
     <None Include="bin\Debug\Ionic.Zip.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="bin\Debug\bin\Debug\Ionic.Zip.dll" />
     <Content Include="icon.ico" />
+    <EmbeddedResource Include="Ionic.Zip.dll" />
     <None Include="Resources\reload.png" />
   </ItemGroup>
   <ItemGroup>
